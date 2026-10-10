@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GridGala — Free Photo Collage Maker for 2 to 9 Photos</title>
+<meta name="description" content="GridGala is a free photo collage maker with layout templates for 2 to 9 photos, gap, corner-radius and background controls, and HD PNG export — no signup, no watermark.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+ body{font-family:'Outfit',sans-serif;background:#f6f4ff;color:#2e1065}
+ .font-display{font-family:'Fraunces',serif}
+ .bento{background:#fff;border:1.5px solid #e9e2ff;border-radius:24px;box-shadow:0 10px 30px rgba(109,80,220,.08)}
+ .chip{border:1.5px solid #ddd6fe;border-radius:999px;padding:.45rem .8rem;font-weight:700;font-size:.85rem;background:#fff;cursor:pointer}
+ .chip.active{background:#7c6cf0;color:#fff;border-color:#7c6cf0}
+ .tmpl{border:2px solid #e9e2ff;border-radius:14px;padding:.6rem;font-size:.8rem;font-weight:700;background:#faf9ff;cursor:pointer;text-align:left;width:100%}
+ .tmpl.active{border-color:#7c6cf0;background:#ede9fe}
+ input[type=range]{accent-color:#7c6cf0;width:100%}
+ .swatch{width:34px;height:34px;border-radius:999px;border:2px solid #fff;box-shadow:0 0 0 2px #ddd6fe;cursor:pointer}
+ .faq-item{border:1.5px solid #e9e2ff;border-radius:18px;background:#fff;padding:1.1rem}
+ #previewCanvas{width:100%;height:auto;display:block;border-radius:18px;background:#fff;cursor:pointer}
+ .thumb{position:relative}
+ .thumb button{position:absolute;top:4px;right:4px;background:#2e1065;color:#fff;border-radius:999px;width:22px;height:22px;font-size:13px;line-height:1}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many photos can I put in a GridGala collage?","acceptedAnswer":{"@type":"Answer","text":"You can build collages with 2 to 9 photos. Pick a photo count first, then choose from the layout templates made for that count, including grids, film strips, hero layouts and mosaics."}},{"@type":"Question","name":"Is GridGala really free with no watermark?","acceptedAnswer":{"@type":"Answer","text":"Yes. GridGala offers unlimited free usage with no signup, no paywall and no watermark. Your exported HD PNG is clean and ready to share or print."}},{"@type":"Question","name":"What does HD PNG export mean in GridGala?","acceptedAnswer":{"@type":"Answer","text":"HD export renders your collage at 2400 pixels on its longest edge and saves it as a PNG file. That is large enough for crisp social posts, presentations and good-quality prints."}},{"@type":"Question","name":"Are my photos uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. GridGala runs entirely in your browser. Your photos are loaded locally, arranged on a canvas on your device, and never sent to any server."}},{"@type":"Question","name":"Can I change the gaps, corners and background of my collage?","acceptedAnswer":{"@type":"Answer","text":"Yes. Sliders control the gap between photos, the corner radius of every photo and the outer padding, while the background picker and preset swatches let you set any background colour."}},{"@type":"Question","name":"Which aspect ratio should I choose for Instagram or stories?","acceptedAnswer":{"@type":"Answer","text":"Use Square 1:1 for a classic feed post, Portrait 4:5 to take more feed space, and Story 9:16 for stories and reels covers. Landscape 16:9 suits slides and video thumbnails, while Classic 4:3 works well for blogs and prints."}}]}
+</script>
+</head>
+<body id="top">
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-violet-100">
+ <div class="mx-auto max-w-6xl px-4 sm:px-6 py-3 flex items-center justify-between">
+  <a href="#top" class="flex items-center gap-2 font-display font-black text-2xl text-violet-950"><span class="inline-grid grid-cols-2 gap-0.5 w-7 h-7"><span class="bg-violet-500 rounded"></span><span class="bg-lavender bg-violet-300 rounded"></span><span class="bg-violet-300 rounded"></span><span class="bg-violet-600 rounded"></span></span>GridGala</a>
+  <nav class="flex gap-5 font-semibold text-violet-900"><a href="#top">Home</a><a href="https://fixoraa.tech">More Tools</a></nav>
+ </div>
+</header>
+
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="mx-auto max-w-6xl px-4 sm:px-6 py-8">
+ <div class="text-center max-w-2xl mx-auto">
+  <span class="inline-block bg-violet-600 text-white text-xs font-bold tracking-widest uppercase px-3 py-1.5 rounded-full">Unlimited Free Usage</span>
+  <h1 class="font-display font-black text-4xl sm:text-5xl mt-4 leading-tight">A little gala for your <span class="text-violet-600 italic">grid of photos.</span></h1>
+  <p class="text-violet-900/70 mt-3 text-lg">Drop in 2 to 9 photos, pick a layout, tune the gaps and corners, and export a crisp HD PNG. No signup. No watermark. Nothing leaves your browser.</p>
+ </div>
+
+ <!-- BENTO EDITOR -->
+ <section class="grid lg:grid-cols-[1fr_350px] gap-5 mt-8 items-start" aria-label="Photo collage editor">
+  <!-- Preview bento -->
+  <div class="bento p-4 sm:p-5">
+   <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+    <h2 class="font-display font-bold text-xl">Your collage</h2>
+    <span id="statusLine" class="text-sm font-semibold text-violet-700 bg-violet-50 px-3 py-1.5 rounded-full">Add photos to begin — placeholders show the layout.</span>
+   </div>
+   <canvas id="previewCanvas" width="1200" height="1200" aria-label="Collage preview. Click a cell to replace that photo."></canvas>
+   <div id="dropZone" class="mt-4 border-2 border-dashed border-violet-300 rounded-2xl p-5 text-center bg-violet-50/60 cursor-pointer hover:bg-violet-100/60 transition">
+    <p class="font-bold text-violet-950">📷 Drop photos here or click to browse</p>
+    <p class="text-sm text-violet-900/60 mt-1">JPG, PNG or WebP · up to 9 photos · processed only on your device</p>
+    <input type="file" id="fileInput" accept="image/*" multiple class="hidden">
+    <input type="file" id="replaceInput" accept="image/*" class="hidden">
+   </div>
+   <div id="thumbRow" class="flex flex-wrap gap-3 mt-4"></div>
+   <p class="text-xs text-violet-900/50 mt-3">Tip: click any cell in the preview to replace just that photo. Use the thumbnails to remove a photo.</p>
+  </div>
+
+  <!-- Controls bento column -->
+  <div class="grid gap-5">
+   <div class="bento p-5">
+    <h3 class="font-bold text-violet-950 mb-3">1 · How many photos?</h3>
+    <div id="countRow" class="flex flex-wrap gap-2"></div>
+    <h3 class="font-bold text-violet-950 mt-5 mb-3">2 · Layout template</h3>
+    <div id="templateList" class="grid grid-cols-1 gap-2"></div>
+   </div>
+
+   <div class="bento p-5">
+    <h3 class="font-bold text-violet-950 mb-3">3 · Shape &amp; spacing</h3>
+    <label class="block text-sm font-semibold mt-2">Gap between photos <span id="gapVal" class="text-violet-600">12px</span><input type="range" id="gapRange" min="0" max="60" value="12"></label>
+    <label class="block text-sm font-semibold mt-3">Corner radius <span id="radiusVal" class="text-violet-600">16px</span><input type="range" id="radiusRange" min="0" max="80" value="16"></label>
+    <label class="block text-sm font-semibold mt-3">Outer padding <span id="padVal" class="text-violet-600">16px</span><input type="range" id="padRange" min="0" max="80" value="16"></label>
+    <label class="block text-sm font-semibold mt-4">Canvas shape
+      <select id="aspectSel" class="mt-1 w-full border-2 border-violet-200 rounded-xl px-3 py-2 bg-white font-semibold">
+       <option value="square">Square 1:1</option>
+       <option value="portrait">Portrait 4:5</option>
+       <option value="landscape">Landscape 16:9</option>
+       <option value="story">Story 9:16</option>
+       <option value="classic">Classic 4:3</option>
+      </select>
+    </label>
+   </div>
+
+   <div class="bento p-5">
+    <h3 class="font-bold text-violet-950 mb-3">4 · Background</h3>
+    <div class="flex items-center gap-3">
+      <input type="color" id="bgColor" value="#ffffff" class="w-14 h-12 rounded-xl border border-violet-200 bg-white cursor-pointer">
+      <input type="text" id="bgHex" value="#ffffff" maxlength="7" class="flex-1 min-w-0 border-2 border-violet-200 rounded-xl px-3 py-2 font-mono text-sm" aria-label="Background hex colour">
+    </div>
+    <div class="flex gap-2 mt-3" id="swatches">
+      <button class="swatch" data-color="#ffffff" style="background:#ffffff" aria-label="White"></button>
+      <button class="swatch" data-color="#ede9fe" style="background:#ede9fe" aria-label="Lavender mist"></button>
+      <button class="swatch" data-color="#7c6cf0" style="background:#7c6cf0" aria-label="Lavender"></button>
+      <button class="swatch" data-color="#2e1065" style="background:#2e1065" aria-label="Deep violet"></button>
+      <button class="swatch" data-color="#fdf2f8" style="background:#fdf2f8" aria-label="Blush"></button>
+      <button class="swatch" data-color="#111827" style="background:#111827" aria-label="Charcoal"></button>
+    </div>
+    <p id="bgError" class="text-sm text-rose-600 font-semibold mt-2 hidden">Please enter a valid hex colour like #ede9fe.</p>
+   </div>
+
+   <div class="bento p-5 bg-gradient-to-br from-violet-600 to-violet-800 text-white" style="background:linear-gradient(135deg,#7c6cf0,#4c1d95)">
+    <h3 class="font-display font-bold text-xl">5 · Export</h3>
+    <p class="text-violet-100 text-sm mt-1">Rendered at 2400px on the longest edge — sharp on feeds, slides and prints.</p>
+    <button id="exportBtn" class="mt-4 w-full bg-white text-violet-800 font-extrabold py-3 rounded-2xl hover:bg-violet-50 transition">⬇ Download HD PNG</button>
+    <button id="clearBtn" class="mt-2 w-full border border-white/50 text-white font-bold py-2.5 rounded-2xl hover:bg-white/10 transition">Clear all photos</button>
+    <p id="exportMsg" class="text-sm mt-3 font-semibold"></p>
+   </div>
+  </div>
+ </section>
+</main>
+
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="464498"></script>
+    </div>
+  </div>
+</div>
+
+<section class="mx-auto max-w-4xl px-4 sm:px-6 pb-10">
+<article id="seo-article">
+<h2 class="font-display font-black text-3xl mt-6 mb-4">Photo Collage Maker: How to Turn a Handful of Photos into One Beautiful Image</h2>
+<p>A photo collage does something a single photograph cannot: it tells a story in sequence. One picture shows a moment, but a grid of pictures shows a day, a relationship, a project, a journey or a celebration. That is why collages remain one of the most loved formats on social media, in classrooms, at family events and in small-business marketing. GridGala is a free photo collage maker built around a simple idea — you should be able to drop in between two and nine photos, arrange them in a layout that flatters them, polish the spacing and corners in seconds, and export a high-definition image without signing up, paying, or accepting a watermark on your work.</p>
+<p>Most people arrive at a collage maker with a practical goal. Perhaps you photographed a birthday and want one shareable image instead of nine separate posts. Perhaps you run a small shop and need a neat before-and-after pair, a product line-up, or a weekly roundup for your feed. Perhaps you are a teacher assembling a class memory page, a student building a visual project board, or a traveller compressing a whole weekend into a single frame. In every case the workflow is the same: choose your photos, choose a structure, adjust the details, and share the result. GridGala is designed so that each of those steps takes moments rather than minutes.</p>
+<h3 class="font-display font-bold text-2xl mt-6 mb-2">Start with the story: choosing 2 to 9 photos</h3>
+<p>The number of photos you choose changes the feeling of the finished collage. Two photos create a powerful comparison — before and after, then and now, product and detail, portrait and place. Three photos form a natural narrative of beginning, middle and end, which is why the triptych has been used in art for centuries. Four photos give you balance and symmetry, the familiar two-by-two grid that reads instantly on a phone screen. Five and six photos suit roundups and galleries, while seven, eight and nine photos create the dense, joyful mosaic that works beautifully for celebrations, mood boards and year-in-review posts. GridGala lets you switch the photo count with one tap, and the template list updates immediately so you only ever see layouts that fit the number you selected.</p>
+<p>Choosing which photos to include matters more than any filter. Pick images that share a colour mood or a subject, and your collage will feel composed rather than random. Mix one wide establishing shot with closer details: a table setting beside the cake, a skyline beside a street snack, a finished craft beside hands making it. Avoid including near-duplicates, because two almost identical frames side by side weaken both. If a photo is dark or tilted, it will still work in a grid — smaller cells are forgiving — but your strongest, sharpest image deserves the hero position in layouts that offer one larger cell.</p>
+<h3 class="font-display font-bold text-2xl mt-6 mb-2">Layout templates that do the composing for you</h3>
+<p>Good composition is mostly geometry, and layout templates encode that geometry so you do not have to reinvent it. GridGala includes side-by-side and stacked pairs for two photos; triptych rows and hero layouts for three; the classic two-by-two grid, a film strip and a big-story layout for four; mosaic and hero arrangements for five; gallery grids for six; and mosaic and full three-by-three arrangements for seven, eight and nine photos. Hero layouts give one photograph a larger cell, which creates a clear focal point and lets supporting images add context around it. Equal grids feel calm, democratic and tidy — ideal for product ranges and step-by-step sequences. Film strips feel cinematic and work wonderfully for landscapes in a row.</p>
+<p>Every photo you place is centre-cropped to fill its cell, a technique photographers call cover cropping. That means no stretched faces, no squashed buildings and no awkward empty bars: the image fills its frame edge to edge, and the crop trims the surplus evenly from the sides or the top and bottom. When you preview a layout, look at where faces and key details fall. If an important face sits at the very edge of its photo, a different template with a wider cell may treat it better. Swapping templates is instant, so experiment freely — the layout that flatters your photos is usually obvious the moment you see it.</p>
+<h3 class="font-display font-bold text-2xl mt-6 mb-2">Gap, corner radius, padding and background: the small controls that change everything</h3>
+<p>Once the structure is right, four small controls decide whether a collage looks homemade or professionally finished. The gap control sets the space between photos. A zero gap creates a seamless mosaic where images touch, which suits landscapes and textures. A small gap of eight to sixteen pixels gives a clean gallery feel, and a wide gap turns the collage into a set of distinct framed prints. The corner radius control rounds the corners of every photo together: sharp corners feel modern and editorial, gentle rounding feels friendly, and large rounding creates the soft, playful look popular in family and lifestyle posts. Because the radius applies uniformly, the whole grid keeps a consistent rhythm.</p>
+<p>Outer padding frames the collage itself, separating the grid from the edge of the image the way a mount separates a print from its frame. Background colour shows through the gaps and padding, so it quietly sets the mood of the whole piece. White is crisp and safe, lavender tones feel soft and celebratory, deep violet or charcoal makes bright photos glow, and a blush tint warms skin tones and food photography. A useful trick is to sample the mood of your photos rather than matching any single colour exactly: warm photos love cream and blush backgrounds, cool travel photos love pale blue-grey or lavender, and product shots usually look most premium on pure white or very dark backgrounds. GridGala gives you a colour picker, a hex field for exact brand colours, and preset swatches for the combinations people reach for most.</p>
+<h3 class="font-display font-bold text-2xl mt-6 mb-2">Picking the right canvas shape for where the collage will live</h3>
+<p>A collage is always destined for somewhere, and that destination should decide its shape. GridGala offers five canvas shapes. Square, at a one-to-one ratio, is the universal classic for feeds and prints. Portrait four-to-five occupies more vertical space in social feeds, which tends to earn more attention as people scroll. Story nine-to-sixteen fills a phone screen completely for stories and short-video covers. Landscape sixteen-to-nine suits presentation slides, blog headers and video thumbnails. Classic four-to-three remains a comfortable shape for documents, school projects and traditional photo prints. Choosing the shape before you finalise a layout is wise, because a template breathes differently in a tall canvas than in a wide one, and GridGala redraws the grid instantly so you can compare.</p>
+<h3 class="font-display font-bold text-2xl mt-6 mb-2">Why HD PNG export matters</h3>
+<p>Many casual collage tools quietly export a small image that looks fine on your phone but turns soft when printed, projected or viewed on a large screen. GridGala renders your finished collage at 2400 pixels on its longest edge and saves it as a PNG. PNG is a lossless format, which means the sharp edges, text-free photo details and flat background colours in your collage survive export exactly as designed, with none of the smudging that repeated JPEG compression can introduce around edges. At 2400 pixels, a square collage prints crisply at eight inches and looks excellent at larger sizes for posters viewed at a distance, while on screens it stays sharp on high-resolution displays. The file is yours completely: no watermark, no logo stamp, no reduced-resolution free tier trick.</p>
+<h3 class="font-display font-bold text-2xl mt-6 mb-2">Privacy by design: your photos never leave your device</h3>
+<p>Photographs are personal. They show your family, your customers, your home and your work, so where they are processed matters. GridGala runs entirely in your web browser using the canvas technology built into every modern phone and computer. When you select photos, they are read locally on your device, drawn into the collage preview, and exported directly from your browser to your downloads. Nothing is uploaded to a server, nothing is stored in a cloud account, and there is no account to create in the first place. You can even load the page, disconnect from the internet, and finish your collage offline. For teachers, clinics, small businesses and families who are rightly cautious about images of children or clients, that local-only design is not a footnote — it is a core feature.</p>
+<h3 class="font-display font-bold text-2xl mt-6 mb-2">Ideas to try with your first collages</h3>
+<p>If you need inspiration, start with a two-photo before-and-after of a room, a recipe, a garden or a fitness milestone. Try a three-photo story of a day trip: the journey, the highlight and the meal. Build a four-photo product grid showing a handmade item from four angles, or a five-photo birthday mosaic with the cake in the hero cell. Teachers can assemble nine-photo class grids where every child contributes one square. Sellers can make weekly roundup collages that show range at a glance. Couples can turn a year of small moments into one framed print. The pattern is always the same — honest photos, a layout with a clear focal point, restrained spacing, a background that supports rather than shouts, and an export that stays sharp wherever it goes. GridGala gives you all of that in a single free page, ready whenever the next set of photos deserves a gala of its own.</p>
+</article>
+
+<h2 class="font-display font-black text-3xl mt-8 mb-4">Frequently asked questions</h2>
+<div class="grid gap-3">
+ <div class="faq-item"><h3 class="font-bold">How many photos can I put in a GridGala collage?</h3><p class="text-violet-900/70 mt-1">You can build collages with 2 to 9 photos. Pick a photo count first, then choose from the layout templates made for that count, including grids, film strips, hero layouts and mosaics.</p></div>
+ <div class="faq-item"><h3 class="font-bold">Is GridGala really free with no watermark?</h3><p class="text-violet-900/70 mt-1">Yes. GridGala offers unlimited free usage with no signup, no paywall and no watermark. Your exported HD PNG is clean and ready to share or print.</p></div>
+ <div class="faq-item"><h3 class="font-bold">What does HD PNG export mean in GridGala?</h3><p class="text-violet-900/70 mt-1">HD export renders your collage at 2400 pixels on its longest edge and saves it as a PNG file. That is large enough for crisp social posts, presentations and good-quality prints.</p></div>
+ <div class="faq-item"><h3 class="font-bold">Are my photos uploaded to a server?</h3><p class="text-violet-900/70 mt-1">No. GridGala runs entirely in your browser. Your photos are loaded locally, arranged on a canvas on your device, and never sent to any server.</p></div>
+ <div class="faq-item"><h3 class="font-bold">Can I change the gaps, corners and background of my collage?</h3><p class="text-violet-900/70 mt-1">Yes. Sliders control the gap between photos, the corner radius of every photo and the outer padding, while the background picker and preset swatches let you set any background colour.</p></div>
+ <div class="faq-item"><h3 class="font-bold">Which aspect ratio should I choose for Instagram or stories?</h3><p class="text-violet-900/70 mt-1">Use Square 1:1 for a classic feed post, Portrait 4:5 to take more feed space, and Story 9:16 for stories and reels covers. Landscape 16:9 suits slides and video thumbnails, while Classic 4:3 works well for blogs and prints.</p></div>
+</div>
+</section>
+
+<footer class="border-t border-violet-100 py-6 text-center text-sm text-violet-900/60">GridGala — free photo collages, made entirely in your browser.</footer>
+
+<script id="lib-gridgala">
+var GridGalaLib = {
+  clamp: function (v, min, max) {
+    v = Number(v);
+    if (!isFinite(v)) return min;
+    return Math.min(max, Math.max(min, v));
+  },
+  clampCount: function (n) {
+    n = Math.floor(Number(n));
+    if (!isFinite(n)) return 4;
+    return Math.min(9, Math.max(2, n));
+  },
+  gridCells: function (cols, rows) {
+    var cells = [];
+    for (var r = 1; r <= rows; r++) {
+      for (var c = 1; c <= cols; c++) {
+        cells.push({ col: c, row: r, colSpan: 1, rowSpan: 1 });
+      }
+    }
+    return cells;
+  },
+  TEMPLATES: null,
+  templates: function () {
+    if (GridGalaLib.TEMPLATES) return GridGalaLib.TEMPLATES;
+    var g = GridGalaLib.gridCells;
+    var list = [
+      { id: 'duo-side', count: 2, name: 'Side by Side', cols: 2, rows: 1, cells: g(2, 1) },
+      { id: 'duo-stack', count: 2, name: 'Stacked Pair', cols: 1, rows: 2, cells: g(1, 2) },
+      { id: 'trio-row', count: 3, name: 'Triptych Row', cols: 3, rows: 1, cells: g(3, 1) },
+      { id: 'trio-hero-top', count: 3, name: 'Hero on Top', cols: 2, rows: 2, cells: [{ col: 1, row: 1, colSpan: 2, rowSpan: 1 }, { col: 1, row: 2, colSpan: 1, rowSpan: 1 }, { col: 2, row: 2, colSpan: 1, rowSpan: 1 }] },
+      { id: 'trio-hero-left', count: 3, name: 'Hero on Left', cols: 2, rows: 2, cells: [{ col: 1, row: 1, colSpan: 1, rowSpan: 2 }, { col: 2, row: 1, colSpan: 1, rowSpan: 1 }, { col: 2, row: 2, colSpan: 1, rowSpan: 1 }] },
+      { id: 'quad-grid', count: 4, name: 'Classic 2 x 2', cols: 2, rows: 2, cells: g(2, 2) },
+      { id: 'quad-row', count: 4, name: 'Film Strip', cols: 4, rows: 1, cells: g(4, 1) },
+      { id: 'quad-hero-left', count: 4, name: 'Big Story Left', cols: 3, rows: 2, cells: [{ col: 1, row: 1, colSpan: 2, rowSpan: 2 }, { col: 3, row: 1, colSpan: 1, rowSpan: 1 }, { col: 3, row: 2, colSpan: 1, rowSpan: 1 }, { col: 1, row: 1, colSpan: 0, rowSpan: 0 }].filter(function (c) { return c.colSpan > 0; }).concat([]).slice(0, 3).concat([{ col: 1, row: 1, colSpan: 0, rowSpan: 0 }]).filter(function (c) { return c.colSpan > 0; }) },
+      { id: 'five-mosaic', count: 5, name: 'Mosaic Five', cols: 3, rows: 2, cells: [{ col: 1, row: 1, colSpan: 2, rowSpan: 1 }, { col: 3, row: 1, colSpan: 1, rowSpan: 1 }, { col: 1, row: 2, colSpan: 1, rowSpan: 1 }, { col: 2, row: 2, colSpan: 1, rowSpan: 1 }, { col: 3, row: 2, colSpan: 1, rowSpan: 1 }] },
+      { id: 'five-hero', count: 5, name: 'Hero and Four', cols: 3, rows: 3, cells: [{ col: 1, row: 1, colSpan: 2, rowSpan: 2 }, { col: 3, row: 1, colSpan: 1, rowSpan: 1 }, { col: 3, row: 2, colSpan: 1, rowSpan: 1 }, { col: 1, row: 3, colSpan: 1, rowSpan: 1 }, { col: 2, row: 3, colSpan: 2, rowSpan: 1 }] },
+      { id: 'six-grid', count: 6, name: 'Gallery 3 x 2', cols: 3, rows: 2, cells: g(3, 2) },
+      { id: 'six-portrait', count: 6, name: 'Portrait 2 x 3', cols: 2, rows: 3, cells: g(2, 3) },
+      { id: 'seven-mosaic', count: 7, name: 'Mosaic Seven', cols: 3, rows: 3, cells: [{ col: 1, row: 1, colSpan: 2, rowSpan: 1 }, { col: 3, row: 1, colSpan: 1, rowSpan: 1 }, { col: 1, row: 2, colSpan: 1, rowSpan: 1 }, { col: 2, row: 2, colSpan: 1, rowSpan: 1 }, { col: 3, row: 2, colSpan: 1, rowSpan: 1 }, { col: 1, row: 3, colSpan: 1, rowSpan: 1 }, { col: 2, row: 3, colSpan: 2, rowSpan: 1 }] },
+      { id: 'eight-grid', count: 8, name: 'Gallery 4 x 2', cols: 4, rows: 2, cells: g(4, 2) },
+      { id: 'eight-mosaic', count: 8, name: 'Mosaic Eight', cols: 3, rows: 3, cells: [{ col: 1, row: 1, colSpan: 2, rowSpan: 2 }, { col: 3, row: 1, colSpan: 1, rowSpan: 1 }, { col: 3, row: 2, colSpan: 1, rowSpan: 1 }, { col: 1, row: 3, colSpan: 1, rowSpan: 1 }, { col: 2, row: 3, colSpan: 1, rowSpan: 1 }, { col: 3, row: 3, colSpan: 1, rowSpan: 1 }, { col: 1, row: 1, colSpan: 0, rowSpan: 0 }, { col: 1, row: 1, colSpan: 0, rowSpan: 0 }].filter(function (c) { return c.colSpan > 0; }) },
+      { id: 'nine-grid', count: 9, name: 'Classic 3 x 3', cols: 3, rows: 3, cells: g(3, 3) },
+      { id: 'nine-hero', count: 9, name: 'Hero Centre Nine', cols: 4, rows: 3, cells: [{ col: 1, row: 1, colSpan: 1, rowSpan: 1 }, { col: 2, row: 1, colSpan: 1, rowSpan: 1 }, { col: 3, row: 1, colSpan: 1, rowSpan: 1 }, { col: 4, row: 1, colSpan: 1, rowSpan: 1 }, { col: 1, row: 2, colSpan: 1, rowSpan: 1 }, { col: 2, row: 2, colSpan: 2, rowSpan: 1 }, { col: 4, row: 2, colSpan: 1, rowSpan: 1 }, { col: 1, row: 3, colSpan: 2, rowSpan: 1 }, { col: 3, row: 3, colSpan: 2, rowSpan: 1 }] }
+    ];
+    // Fix quad-hero-left and eight-mosaic to exact counts with valid distinct cells
+    list = list.map(function (t) {
+      if (t.id === 'quad-hero-left') {
+        return { id: t.id, count: 4, name: t.name, cols: 3, rows: 3, cells: [
+          { col: 1, row: 1, colSpan: 2, rowSpan: 3 },
+          { col: 3, row: 1, colSpan: 1, rowSpan: 1 },
+          { col: 3, row: 2, colSpan: 1, rowSpan: 1 },
+          { col: 3, row: 3, colSpan: 1, rowSpan: 1 }
+        ]};
+      }
+      if (t.id === 'eight-mosaic') {
+        return { id: t.id, count: 8, name: t.name, cols: 4, rows: 3, cells: [
+          { col: 1, row: 1, colSpan: 2, rowSpan: 2 },
+          { col: 3, row: 1, colSpan: 1, rowSpan: 1 },
+          { col: 4, row: 1, colSpan: 1, rowSpan: 1 },
+          { col: 3, row: 2, colSpan: 1, rowSpan: 1 },
+          { col: 4, row: 2, colSpan: 1, rowSpan: 1 },
+          { col: 1, row: 3, colSpan: 1, rowSpan: 1 },
+          { col: 2, row: 3, colSpan: 1, rowSpan: 1 },
+          { col: 3, row: 3, colSpan: 2, rowSpan: 1 }
+        ]};
+      }
+      return t;
+    });
+    GridGalaLib.TEMPLATES = list;
+    return list;
+  },
+  getTemplatesForCount: function (count) {
+    var c = GridGalaLib.clampCount(count);
+    return GridGalaLib.templates().filter(function (t) { return t.count === c; });
+  },
+  getTemplateById: function (id) {
+    var all = GridGalaLib.templates();
+    for (var i = 0; i < all.length; i++) if (all[i].id === id) return all[i];
+    return null;
+  },
+  defaultTemplateForCount: function (count) {
+    var ts = GridGalaLib.getTemplatesForCount(count);
+    return ts.length ? ts[0] : null;
+  },
+  normalizeSettings: function (s) {
+    s = s || {};
+    var bg = typeof s.background === 'string' && /^#[0-9a-fA-F]{6}$/.test(s.background.trim()) ? s.background.trim().toLowerCase() : '#ffffff';
+    return {
+      gap: GridGalaLib.clamp(s.gap === undefined ? 12 : s.gap, 0, 60),
+      radius: GridGalaLib.clamp(s.radius === undefined ? 16 : s.radius, 0, 80),
+      padding: GridGalaLib.clamp(s.padding === undefined ? 16 : s.padding, 0, 80),
+      background: bg
+    };
+  },
+  isValidHex: function (v) {
+    return typeof v === 'string' && /^#[0-9a-fA-F]{6}$/.test(v.trim());
+  },
+  cellRects: function (template, width, height, settings) {
+    if (!template || !Array.isArray(template.cells)) return [];
+    var W = Number(width), H = Number(height);
+    if (!isFinite(W) || !isFinite(H) || W <= 0 || H <= 0) return [];
+    var st = GridGalaLib.normalizeSettings(settings);
+    var gap = st.gap, pad = st.padding;
+    var innerW = W - pad * 2, innerH = H - pad * 2;
+    if (innerW <= 0 || innerH <= 0) return [];
+    var cols = Math.max(1, Math.floor(template.cols) || 1);
+    var rows = Math.max(1, Math.floor(template.rows) || 1);
+    var cellW = (innerW - gap * (cols - 1)) / cols;
+    var cellH = (innerH - gap * (rows - 1)) / rows;
+    if (cellW <= 0 || cellH <= 0) return [];
+    return template.cells.map(function (cell, i) {
+      return {
+        index: i,
+        x: pad + (cell.col - 1) * (cellW + gap),
+        y: pad + (cell.row - 1) * (cellH + gap),
+        w: cell.colSpan * cellW + (cell.colSpan - 1) * gap,
+        h: cell.rowSpan * cellH + (cell.rowSpan - 1) * gap
+      };
+    });
+  },
+  coverCrop: function (srcW, srcH, targetW, targetH) {
+    var sw = Number(srcW), sh = Number(srcH), tw = Number(targetW), th = Number(targetH);
+    if (!isFinite(sw) || !isFinite(sh) || !isFinite(tw) || !isFinite(th) || sw <= 0 || sh <= 0 || tw <= 0 || th <= 0) return null;
+    var srcRatio = sw / sh, tgtRatio = tw / th;
+    var cw, ch;
+    if (srcRatio > tgtRatio) { ch = sh; cw = sh * tgtRatio; }
+    else { cw = sw; ch = sw / tgtRatio; }
+    return { sx: (sw - cw) / 2, sy: (sh - ch) / 2, sw: cw, sh: ch };
+  },
+  ASPECTS: {
+    square: { id: 'square', name: 'Square 1:1', ratio: 1 },
+    portrait: { id: 'portrait', name: 'Portrait 4:5', ratio: 0.8 },
+    landscape: { id: 'landscape', name: 'Landscape 16:9', ratio: 16 / 9 },
+    story: { id: 'story', name: 'Story 9:16', ratio: 9 / 16 },
+    classic: { id: 'classic', name: 'Classic 4:3', ratio: 4 / 3 }
+  },
+  exportDimensions: function (aspectId, longEdge) {
+    var a = GridGalaLib.ASPECTS[aspectId] || GridGalaLib.ASPECTS.square;
+    var L = GridGalaLib.clamp(longEdge === undefined ? 2400 : longEdge, 400, 4000);
+    var w, h;
+    if (a.ratio >= 1) { w = Math.round(L); h = Math.round(L / a.ratio); }
+    else { h = Math.round(L); w = Math.round(L * a.ratio); }
+    return { width: w, height: h, ratio: a.ratio, aspect: a.id };
+  },
+  exportFilename: function (name) {
+    var s = String(name || 'gridgala-collage').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    return (s || 'gridgala-collage') + '.png';
+  },
+  missingCount: function (template, photoCount) {
+    if (!template) return 0;
+    var p = Math.max(0, Math.floor(Number(photoCount)) || 0);
+    return Math.max(0, template.count - p);
+  }
+};
+if (typeof module !== 'undefined' && module.exports) { module.exports = GridGalaLib; }
+
+</script>
+<script>
+(function(){
+ var photos=[]; // {img, name}
+ var count=4; var template=GridGalaLib.defaultTemplateForCount(count);
+ var replaceIndex=-1;
+ var els={};
+ ['previewCanvas','statusLine','fileInput','replaceInput','dropZone','thumbRow','countRow','templateList','gapRange','radiusRange','padRange','aspectSel','bgColor','bgHex','bgError','exportBtn','clearBtn','exportMsg','gapVal','radiusVal','padVal'].forEach(function(id){els[id]=document.getElementById(id);});
+ function settings(){return GridGalaLib.normalizeSettings({gap:+els.gapRange.value,radius:+els.radiusRange.value,padding:+els.padRange.value,background:els.bgColor.value});}
+ function rounded(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+ function draw(canvas,longEdge){
+   var dims=GridGalaLib.exportDimensions(els.aspectSel.value,longEdge);
+   canvas.width=dims.width; canvas.height=dims.height;
+   var ctx=canvas.getContext('2d'); var st=settings();
+   // scale gap/radius/padding proportionally to longEdge vs 1200 preview baseline
+   var scale=longEdge/1200;
+   var stScaled={gap:st.gap*(dims.width/600),radius:st.radius*(dims.width/600),padding:st.padding*(dims.width/600),background:st.background};
+   ctx.fillStyle=st.background; ctx.fillRect(0,0,canvas.width,canvas.height);
+   var rects=GridGalaLib.cellRects(template,canvas.width,canvas.height,stScaled);
+   rects.forEach(function(r,i){
+     ctx.save(); rounded(ctx,r.x,r.y,r.w,r.h,stScaled.radius); ctx.clip();
+     var p=photos[i];
+     if(p&&p.img){
+       var crop=GridGalaLib.coverCrop(p.img.naturalWidth,p.img.naturalHeight,r.w,r.h);
+       if(crop) ctx.drawImage(p.img,crop.sx,crop.sy,crop.sw,crop.sh,r.x,r.y,r.w,r.h);
+     } else {
+       var grad=ctx.createLinearGradient(r.x,r.y,r.x+r.w,r.y+r.h);
+       grad.addColorStop(0,'#ede9fe'); grad.addColorStop(1,'#ddd6fe');
+       ctx.fillStyle=grad; ctx.fillRect(r.x,r.y,r.w,r.h);
+       ctx.fillStyle='#7c6cf0'; ctx.font='700 '+Math.max(18,Math.min(r.w,r.h)*0.28)+'px Outfit,sans-serif';
+       ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(String(i+1),r.x+r.w/2,r.y+r.h/2);
+     }
+     ctx.restore();
+   });
+   return dims;
+ }
+ function render(){ draw(els.previewCanvas,1200); renderThumbs(); updateStatus(); }
+ function updateStatus(){
+   var missing=GridGalaLib.missingCount(template,photos.length);
+   if(photos.length===0) els.statusLine.textContent='Add photos to begin — placeholders show the layout.';
+   else if(missing>0) els.statusLine.textContent=photos.length+' photo'+(photos.length>1?'s':'')+' placed · '+missing+' cell'+(missing>1?'s':'')+' still empty.';
+   else els.statusLine.textContent='All '+template.count+' cells filled — ready to export in HD.';
+ }
+ function renderThumbs(){
+   els.thumbRow.innerHTML='';
+   photos.forEach(function(p,i){
+     var d=document.createElement('div'); d.className='thumb';
+     var im=document.createElement('img'); im.src=p.img.src; im.alt=p.name||('Photo '+(i+1)); im.className='w-16 h-16 object-cover rounded-xl border-2 border-violet-200';
+     var b=document.createElement('button'); b.textContent='×'; b.setAttribute('aria-label','Remove photo '+(i+1));
+     b.addEventListener('click',function(){photos.splice(i,1); render();});
+     d.appendChild(im); d.appendChild(b); els.thumbRow.appendChild(d);
+   });
+ }
+ function renderCounts(){
+   els.countRow.innerHTML='';
+   for(var n=2;n<=9;n++){(function(n){
+     var b=document.createElement('button'); b.className='chip'+(n===count?' active':''); b.textContent=n;
+     b.addEventListener('click',function(){count=n; template=GridGalaLib.defaultTemplateForCount(count); renderCounts(); renderTemplates(); render();});
+     els.countRow.appendChild(b);
+   })(n);}
+ }
+ function renderTemplates(){
+   els.templateList.innerHTML='';
+   GridGalaLib.getTemplatesForCount(count).forEach(function(t){
+     var b=document.createElement('button'); b.className='tmpl'+(template&&t.id===template.id?' active':''); b.textContent=t.name+' · '+t.cols+' × '+t.rows;
+     b.addEventListener('click',function(){template=t; renderTemplates(); render();});
+     els.templateList.appendChild(b);
+   });
+ }
+ function addFiles(files){
+   var list=Array.prototype.slice.call(files||[]).filter(function(f){return f.type&&f.type.indexOf('image/')===0;});
+   if(!list.length){els.exportMsg.textContent='Please choose image files (JPG, PNG or WebP).'; return;}
+   var room=9-photos.length;
+   if(room<=0){els.exportMsg.textContent='You already have 9 photos — remove one to add another.'; return;}
+   list.slice(0,room).forEach(function(f){
+     var url=URL.createObjectURL(f); var img=new Image();
+     img.onload=function(){photos.push({img:img,name:f.name}); if(photos.length>count){count=GridGalaLib.clampCount(photos.length); template=GridGalaLib.defaultTemplateForCount(count); renderCounts(); renderTemplates();} render();};
+     img.onerror=function(){els.exportMsg.textContent='One file could not be read as an image.';};
+     img.src=url;
+   });
+   if(list.length>room) els.exportMsg.textContent='Only the first '+(room)+' extra photos were added — the maximum is 9.';
+ }
+ els.dropZone.addEventListener('click',function(){els.fileInput.click();});
+ els.fileInput.addEventListener('change',function(){addFiles(els.fileInput.files); els.fileInput.value='';});
+ els.replaceInput.addEventListener('change',function(){
+   var f=els.replaceInput.files&&els.replaceInput.files[0]; els.replaceInput.value='';
+   if(!f||replaceIndex<0) return;
+   var url=URL.createObjectURL(f); var img=new Image();
+   img.onload=function(){ var entry={img:img,name:f.name}; if(replaceIndex<photos.length) photos[replaceIndex]=entry; else photos.push(entry); render();};
+   img.src=url;
+ });
+ ['dragover','dragleave','drop'].forEach(function(ev){els.dropZone.addEventListener(ev,function(e){e.preventDefault(); if(ev==='drop') addFiles(e.dataTransfer.files);});});
+ els.previewCanvas.addEventListener('click',function(e){
+   var rect=els.previewCanvas.getBoundingClientRect();
+   var x=(e.clientX-rect.left)*(els.previewCanvas.width/rect.width);
+   var y=(e.clientY-rect.top)*(els.previewCanvas.height/rect.height);
+   var st=settings(); var scale=els.previewCanvas.width/600;
+   var rects=GridGalaLib.cellRects(template,els.previewCanvas.width,els.previewCanvas.height,{gap:st.gap*scale,radius:st.radius,padding:st.padding*scale,background:st.background});
+   for(var i=0;i<rects.length;i++){var r=rects[i]; if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h){replaceIndex=i; els.replaceInput.click(); return;}}
+ });
+ [els.gapRange,els.radiusRange,els.padRange].forEach(function(r){r.addEventListener('input',function(){els.gapVal.textContent=els.gapRange.value+'px'; els.radiusVal.textContent=els.radiusRange.value+'px'; els.padVal.textContent=els.padRange.value+'px'; render();});});
+ els.aspectSel.addEventListener('change',render);
+ function setBg(hex,fromPicker){
+   if(!GridGalaLib.isValidHex(hex)){els.bgError.classList.remove('hidden'); return;}
+   els.bgError.classList.add('hidden'); els.bgColor.value=hex; els.bgHex.value=hex; render();
+ }
+ els.bgColor.addEventListener('input',function(){setBg(els.bgColor.value,true);});
+ els.bgHex.addEventListener('change',function(){setBg(els.bgHex.value.trim(),false);});
+ document.querySelectorAll('#swatches .swatch').forEach(function(b){b.addEventListener('click',function(){setBg(b.getAttribute('data-color'),false);});});
+ els.clearBtn.addEventListener('click',function(){photos=[]; els.exportMsg.textContent='Cleared. Add photos to start a new collage.'; render();});
+ els.exportBtn.addEventListener('click',function(){
+   if(photos.length===0){els.exportMsg.textContent='Add at least one photo before exporting — an empty grid is not much of a gala.'; return;}
+   var off=document.createElement('canvas'); var dims=draw(off,2400);
+   var a=document.createElement('a'); a.download=GridGalaLib.exportFilename('gridgala-collage'); a.href=off.toDataURL('image/png'); a.click();
+   els.exportMsg.textContent='Exported HD PNG · '+dims.width+' × '+dims.height+'px.';
+ });
+ renderCounts(); renderTemplates(); render();
+})();
+</script>
+</body>
+</html>
